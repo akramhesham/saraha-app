@@ -1,0 +1,32 @@
+import { model, Schema, SchemaTypes } from "mongoose";
+
+const schema=new Schema({
+   content:{
+    type:String,
+    minLength:2,
+    maxLength:1000,
+    required:function(){
+        if(this.attachments.length==0){
+            return true
+        }else{
+            return false
+        }
+    }
+   },
+   attachments:{
+    type:[String]   
+   },
+   receiver:{
+    type:SchemaTypes.ObjectId,
+    ref:"User",
+    required:true
+   },
+   sender:{
+    type:SchemaTypes.ObjectId,
+    ref:"User"
+   }
+},{
+    timestamps:true
+})
+
+export const Message=model("Message",schema);
